@@ -18,6 +18,7 @@ enum RadioMessage {
     Start = 56380,
     rem = 58635
 }
+// Als de toeter wordt ingedrukt dan speelt de auto een toeter af met een 1/10 kans dat het een grappige toeter afspeelt in plaats van een normale
 radio.onReceivedMessage(RadioMessage.rechtdoor, function () {
     funny_honk = randint(1, 10)
     if (funny_honk == 10) {
@@ -30,6 +31,9 @@ radio.onReceivedMessage(RadioMessage.rechtdoor, function () {
 radio.onReceivedMessage(RadioMessage.Finish, function () {
     radio.sendMessage(RadioMessage.Checkpoint3Behaald)
 })
+/**
+ * Als de auto dichtbij een checkpoint komt dan verstuurt het een signaal dat het checkpoint behaald is.
+ */
 radio.onReceivedMessage(RadioMessage.Checkpoint1, function () {
     radio.sendMessage(RadioMessage.Checkpoint1Behaald)
 })
@@ -58,10 +62,14 @@ radio.onReceivedMessage(RadioMessage.links, function () {
     CutebotPro.pwmCruiseControl(20, 100)
     basic.showArrow(ArrowNames.East)
 })
+/**
+ * Als de auto een actie binnenkrijgt dan doet de auto wat die actie inhoudt
+ */
 radio.onReceivedMessage(RadioMessage.achteruit, function () {
     CutebotPro.fullAstern()
     basic.showArrow(ArrowNames.South)
 })
+// radio configureren en de lampen aanzetten
 let funny_honk = 0
 radio.setTransmitPower(7)
 radio.setGroup(35)
